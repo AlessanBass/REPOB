@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ public class App {
     static Scanner ler = new Scanner(System.in);
     static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
     static ArrayList<Imovel> imoveis = new ArrayList<Imovel>();
+
 
     public static void main(String[] args) {
         //Scanner ler = new Scanner(System.in)
@@ -78,11 +80,11 @@ public class App {
                 break;
 
                 case 2:
-
+                    consultarClienteImovel(gestão);
                 break;
 
                 case 3:
-                    System.out.println("Em construcao");
+                    listarImovelCliente(gestão);
                 break;
 
                 case 4:
@@ -118,7 +120,7 @@ public class App {
             clientes.add(cliente);
             while (true){
                 System.out.println("Escolha qual imovel vc deseja: ");
-                conusltarImovelCliente(2);
+                listarImovelCliente(2);
                 matricula = ler.nextLine();
                 int retorno = buscaImovel(matricula);
                 if( retorno != -1){
@@ -161,7 +163,7 @@ public class App {
             for(Cliente cl : clientes){
                 System.out.println("Nome: " + cl.getNome());
                 System.out.println("CPF: " + cl.getCpf());
-                System.out.println("Imoveis que possui: ");
+                System.out.println("Imoveis que "+ cl.getNome() +" possui: ");
                 if(cl.getImoveisCliente().isEmpty()){
                     System.out.println("Nao possui nenhum imovel!");
                     System.out.println("----------------------------");
@@ -182,9 +184,61 @@ public class App {
         }
     }
 
+    public static void consultarClienteImovel(int gestao){
+        if(gestao == 1){
+            String cpf;
+            ler.nextLine();
+
+            System.out.println("Informe o cpf do cliente que deseja consultar: ");
+            cpf = ler.nextLine();
+
+            int retono = buscaCliente(cpf);
+            if(retono != -1){
+                System.out.println("Nome: " + clientes.get(retono).getNome());
+                System.out.println("CPF: " + clientes.get(retono).getCpf());
+                if(clientes.get(retono).getImoveisCliente().isEmpty()){
+                    System.out.println("Nao possui nenhum imovel");
+                }else{
+                    System.out.println("Imoveis que possui: ");
+                    for(int i = 0; i<clientes.get(retono).getImoveisCliente().size(); i++){
+                        System.out.println("Matricula: "+ clientes.get(retono).getImoveisCliente().get(i).getMatricula());
+                        System.out.println("Endereco: "+ clientes.get(retono).getImoveisCliente().get(i).getEndereco());
+                        System.out.println("----------------------------------");
+                    }
+                }
+            }else{
+                System.out.println("Cliente nao encontrado");
+            }
+
+        }else{
+            String matricula;
+            ler.nextLine();
+
+            System.out.println("Informe a matricula do imovel que deseja consultar: ");
+            matricula = ler.nextLine();
+
+            int retorno =  buscaImovel(matricula);
+            if(retorno != -1){
+                System.out.println("Matricula: " + imoveis.get(retorno).getMatricula());
+                System.out.println("Endereco: " + imoveis.get(retorno).getEndereco());
+            }else{
+                System.out.println("Imovel nao encontrado");
+            }
+        }
+    }
+
     public static int buscaImovel(String matricula){
         for(int i = 0; i<imoveis.size(); i++){
             if(imoveis.get(i).getMatricula().equals(matricula)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int buscaCliente(String cpf){
+        for(int i = 0; i<clientes.size(); i++){
+            if(clientes.get(i).getCpf().equals(cpf)){
                 return i;
             }
         }
