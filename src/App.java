@@ -1,10 +1,16 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class App {
     //Nessa classe que vai ficar toda a lógica do negocio
     // Ela contém o método Main() onde o programa começa a ser executado
+
+    static Scanner ler = new Scanner(System.in);
+    static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+    static ArrayList<Imovel> imoveis = new ArrayList<Imovel>();
+
     public static void main(String[] args) {
-        Scanner ler = new Scanner(System.in);
+        //Scanner ler = new Scanner(System.in)
         int op;
         do {
             System.out.println(">>> MENU PRINCIPAL <<<");
@@ -51,7 +57,6 @@ public class App {
     }
 
     public static void subMenu(int gestão){
-        Scanner ler = new Scanner(System.in);
         int op;
         do{
             if(gestão == 1){
@@ -69,7 +74,7 @@ public class App {
 
             switch (op){
                 case 1:
-
+                    incluirClienteImovel(gestão);
                 break;
 
                 case 2:
@@ -95,5 +100,94 @@ public class App {
                     System.out.println("Ops... Opcao invalida!");
             }
         }while(op != 0);
+    }
+
+    public static void incluirClienteImovel(int gestao){
+        if(gestao == 1){
+            String nome, cpf, matricula;
+            int escolha;
+            ler.nextLine();
+
+            System.out.println("Infome o nome do cliente: ");
+            nome = ler.nextLine();
+
+            System.out.println("Infome o cpf do cliente: ");
+            cpf = ler.nextLine();
+
+            Cliente cliente = new Cliente (nome, cpf);
+            clientes.add(cliente);
+            while (true){
+                System.out.println("Escolha qual imovel vc deseja: ");
+                conusltarImovelCliente(2);
+                matricula = ler.nextLine();
+                int retorno = buscaImovel(matricula);
+                if( retorno != -1){
+                    cliente.adicionarImovel(imoveis.get(retorno));
+                    System.out.println("Deseja adquirir outro imovel? 1-SIM/2-NAO");
+                    escolha = ler.nextInt();
+                    if(escolha != 1){
+                        break;
+                    }
+                }else{
+                    System.out.println("Imovel invalido!");
+                }
+
+            }
+
+        }else{
+            String matricula, endereco;
+            double ultimaLeitura,penultimaLeitura;
+            ler.nextLine();
+
+            System.out.println("Informe a matricula do imovel: ");
+            matricula = ler.nextLine();
+
+            System.out.println("Informe o endereco do imovel: ");
+            endereco = ler.nextLine();
+
+            System.out.println("Informe o valor da ultima leitura: ");
+            ultimaLeitura = ler.nextDouble();
+
+            System.out.println("Informe o valor da penultima leitura: ");
+            penultimaLeitura = ler.nextDouble();
+
+            Imovel imovel = new Imovel(matricula, endereco, ultimaLeitura, penultimaLeitura);
+            imoveis.add(imovel);
+        }
+    }
+
+    public static void listarImovelCliente(int gestao){
+        if(gestao == 1){
+            for(Cliente cl : clientes){
+                System.out.println("Nome: " + cl.getNome());
+                System.out.println("CPF: " + cl.getCpf());
+                System.out.println("Imoveis que possui: ");
+                if(cl.getImoveisCliente().isEmpty()){
+                    System.out.println("Nao possui nenhum imovel!");
+                    System.out.println("----------------------------");
+                }else{
+                    for(int i = 0; i<cl.getImoveisCliente().size(); i++){
+                        System.out.println("Matricula: "+ cl.getImoveisCliente().get(i).getMatricula());
+                        System.out.println("Endereco: "+ cl.getImoveisCliente().get(i).getEndereco());
+                        System.out.println("----------------------------------");
+                    }
+                }
+            }
+        }else{
+            for(int i = 0; i<imoveis.size(); i++){
+                System.out.println("Matricula: "+ imoveis.get(i).getMatricula());
+                System.out.println("Endereco: "+ imoveis.get(i).getEndereco());
+                System.out.println("----------------------------------");
+            }
+        }
+    }
+
+    public static int buscaImovel(String matricula){
+        for(int i = 0; i<imoveis.size(); i++){
+            if(imoveis.get(i).getMatricula().equals(matricula)){
+                return i;
+            }
+        }
+        return -1;
     }
 }

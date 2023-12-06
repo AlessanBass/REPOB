@@ -1,6 +1,8 @@
+import java.util.ArrayList;
 public class Cliente {
     private String nome;
     private String cpf;
+    private ArrayList<Imovel> imoveisCliente = new ArrayList<Imovel>();
 
     public Cliente(String nome, String cpf) {
         this.nome = nome;
@@ -9,6 +11,14 @@ public class Cliente {
 
     public String getNome() {
         return nome;
+    }
+
+    public ArrayList<Imovel> getImoveisCliente() {
+        return imoveisCliente;
+    }
+
+    public void setImoveisCliente(ArrayList<Imovel> imoveisCliente) {
+        this.imoveisCliente = imoveisCliente;
     }
 
     public void setNome(String nome) {
@@ -21,5 +31,9 @@ public class Cliente {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public void adicionarImovel(Imovel imovel){
+        this.imoveisCliente.add(imovel);
     }
 }
