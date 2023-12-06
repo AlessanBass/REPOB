@@ -58,10 +58,10 @@ public class App {
         }while(op != 0);
     }
 
-    public static void subMenu(int gestão){
+    public static void subMenu(int gestao){
         int op;
         do{
-            if(gestão == 1){
+            if(gestao == 1){
                 System.out.println(">>> GESTAO DE CLIENTES <<<");
             }else{
                 System.out.println(">>> GESTAO DE IMOVEIS <<<");
@@ -77,23 +77,23 @@ public class App {
 
             switch (op){
                 case 1:
-                    incluirClienteImovel(gestão);
+                    incluirClienteImovel(gestao);
                 break;
 
                 case 2:
-                    consultarClienteImovel(gestão);
+                    consultarClienteImovel(gestao);
                 break;
 
                 case 3:
-                    listarImovelCliente(gestão);
+                    listarImovelCliente(gestao);
                 break;
 
                 case 4:
-                    excluirClienteImovel(gestão);
+                    excluirClienteImovel(gestao);
                 break;
 
                 case 5:
-                    System.out.println("Em construcao");
+                    alterarClienteImovel(gestao);
                 break;
 
                 case 0:
@@ -265,6 +265,66 @@ public class App {
                 System.out.println("Imovel Removido com Sucesso!");
             }else{
                 System.out.println("Imovel não encontrado");
+            }
+        }
+    }
+
+    public static void alterarClienteImovel(int gestao){
+        if(gestao == 1){
+            String cpf, novoNome;
+            ler.nextLine();
+
+            System.out.println("Informe o cpf do cliente que deseja alterar: ");
+            cpf = ler.nextLine();
+
+            int retono = buscaCliente(cpf);
+            if(retono != -1){
+                int escolha;
+                System.out.println("Deseja alterar o nome do cliente ? 1-SIM/2-NAO");
+                escolha = ler.nextInt();
+                ler.nextLine();
+
+                if(escolha == 1){
+                    System.out.println("Informe o novo nome do cliente: ");
+                    novoNome = ler.nextLine();
+                    clientes.get(retono).setNome(novoNome);
+                    System.out.println("Dados aletrados com sucesso!");
+                }
+            }else{
+                System.out.println("Cliente nao encontrado");
+            }
+
+        }else{
+            String matricula;
+            ler.nextLine();
+
+            System.out.println("Informe a matricula do imovel que deseja alterar: ");
+            matricula = ler.nextLine();
+
+            int retorno =  buscaImovel(matricula);
+            if(retorno != -1){
+                int escolha;
+                System.out.println("Deseja alterar o endereco do imovel? 1-SIM/2-NAO");
+                escolha = ler.nextInt();
+                ler.nextLine();
+                if(escolha == 1){
+                    String novoEndereco;
+                    System.out.println("Informe o novo endereco: ");
+                    novoEndereco = ler.nextLine();
+
+                    //Alterando em todos os clientes
+                    for(int i = 0; i<clientes.size(); i++){
+                        for(int j = 0; j<clientes.get(i).getImoveisCliente().size(); j++){
+                            if(clientes.get(i).getImoveisCliente().get(j).equals(imoveis.get(retorno))){
+                                clientes.get(i).getImoveisCliente().get(j).setEndereco(novoEndereco);
+                            }
+                        }
+                    }
+
+                    //Alerando na lista de imoveis
+                    imoveis.get(retorno).setEndereco(novoEndereco);
+                    System.out.println("Dados alterados com sucesso!");
+                }
             }
         }
     }
