@@ -66,6 +66,7 @@ public class App {
             }else{
                 System.out.println(">>> GESTAO DE IMOVEIS <<<");
             }
+
             System.out.println("[1] INCLUIR");
             System.out.println("[2] CONSULTAR");
             System.out.println("[3] LISTAR");
@@ -88,7 +89,7 @@ public class App {
                 break;
 
                 case 4:
-                    System.out.println("Em construcao");
+                    excluirClienteImovel(gestão);
                 break;
 
                 case 5:
@@ -227,6 +228,47 @@ public class App {
         }
     }
 
+    public static void excluirClienteImovel(int gestao){
+        if(gestao == 1){
+            String cpf;
+            ler.nextLine();
+
+            System.out.println("Informe o cpf do cliente que deseja excluir: ");
+            cpf = ler.nextLine();
+
+            int retorno = buscaCliente(cpf);
+            if(retorno != -1){
+                clientes.remove(retorno);
+                System.out.println("Cliente Removido com Sucesso!");
+            }else{
+                System.out.println("Cliente não encontrado");
+            }
+        }else{
+            String matricula;
+            ler.nextLine();
+
+            System.out.println("Informe a matricula do imovel que deseja excluir: ");
+            matricula = ler.nextLine();
+
+            int retorno =  buscaImovel(matricula);
+            if(retorno != -1){
+                //Remover o imovel de clientes tbm
+                for(int i = 0; i<clientes.size(); i++){
+                    for(int j = 0; j<clientes.get(i).getImoveisCliente().size(); j++){
+                        if(clientes.get(i).getImoveisCliente().get(j).equals(imoveis.get(retorno))){
+                            clientes.get(i).getImoveisCliente().remove(j);
+                        }
+                    }
+                }
+                //removendo o imovel da lista
+                imoveis.remove(retorno);
+                System.out.println("Imovel Removido com Sucesso!");
+            }else{
+                System.out.println("Imovel não encontrado");
+            }
+        }
+    }
+
     public static int buscaImovel(String matricula){
         for(int i = 0; i<imoveis.size(); i++){
             if(imoveis.get(i).getMatricula().equals(matricula)){
@@ -244,4 +286,5 @@ public class App {
         }
         return -1;
     }
+
 }
