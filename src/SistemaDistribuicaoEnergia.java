@@ -8,7 +8,7 @@ public class SistemaDistribuicaoEnergia {
         this.clientes = new ArrayList<>();
     }
 
-    // Métodos de gestão de clientes
+    
     public void incluirCliente(Cliente cliente) {
         clientes.add(cliente);
     }
