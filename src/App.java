@@ -103,23 +103,28 @@ public class App {
 				String cpfConsulta = scanner.nextLine();
 				Cliente clienteConsultado = sistema.consultarCliente(cpfConsulta);
 				if (clienteConsultado != null) {
-					System.out.println("Cliente encontrado: " + clienteConsultado);
+					 System.out.println("CPF: " + clienteConsultado.getCpf());
+				     System.out.println("Nome: " + clienteConsultado.getNome());
 				} else {
 					System.out.println("Cliente não encontrado.");
 				}
 				break;
 			case 3:
 				List<Cliente> clientes = sistema.listarClientes();
-				System.out.println("Lista de Clientes:");
-				for (Cliente cliente : clientes) {
-					System.out.println(cliente);
+				if (!clientes.isEmpty()) {
+					System.out.println("Lista de Clientes:");
+					for (Cliente cliente : clientes) {
+						System.out.println(cliente);
+					}
+				}
+				else {
+					System.out.println("Não há clientes cadastrados");
 				}
 				break;
 			case 4:
 				System.out.print("Digite o CPF do cliente a ser excluído: ");
 				String cpfExclusao = scanner.nextLine();
 				sistema.excluirCliente(cpfExclusao);
-				System.out.println("Cliente excluído com sucesso!");
 				break;
 			case 5:
 				System.out.print("Digite o CPF do cliente a ser alterado: ");

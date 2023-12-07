@@ -36,6 +36,9 @@ public class SistemaDistribuicaoEnergia {
         }
         if (clienteParaRemover != null) {
             clientes.remove(clienteParaRemover);
+            System.out.println("Cliente excluído com sucesso.");
+        } else {
+            System.out.println("Cliente não encontrado. Exclusão não realizada.");
         }
     }
 
