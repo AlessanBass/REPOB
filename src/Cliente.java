@@ -5,13 +5,11 @@ public class Cliente {
     private String nome;
     private String cpf;
     private List<Imovel> imoveisCliente;
-    private List<Fatura> faturas;
 
     public Cliente(String nome, String cpf) {
         this.cpf = cpf;
         this.nome = nome;
         this.imoveisCliente = new ArrayList<>();
-        this.faturas = new ArrayList<>();
     }
 
     public String getNome() {
@@ -54,18 +52,6 @@ public class Cliente {
         }
     }
     
-    public void registrarConsumo(double consumo) {
-    	if (faturas.isEmpty() || faturas.get(faturas.size() - 1).isQuitado()) {
-            Fatura novaFatura = new Fatura(consumo);
-            this.faturas.add(novaFatura);
-        } else {
-            System.out.println("A fatura anterior ainda não foi quitada. Consumo não registrado.");
-        }
-    }
-
-    public List<Fatura> getFaturas() {
-        return faturas;
-    }
     
     @Override
     public String toString() {
