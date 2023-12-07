@@ -11,12 +11,17 @@ public class App {
 	// Ela contém o método Main() onde o programa começa a ser executado
 	private SistemaDistribuicaoEnergia sistema;
 	static Scanner scanner = new Scanner(System.in);
-	static List<Cliente> clientes = new ArrayList<Cliente>();
-	static List<Imovel> imoveis = new ArrayList<Imovel>();
-	static List<Fatura> faturas = new ArrayList<Fatura>();
+	List<Cliente> clientes = new ArrayList<Cliente>();
+	List<Imovel> imoveis = new ArrayList<Imovel>();
+	List<Fatura> faturas = new ArrayList<Fatura>();
+	
+	
 
 	public App() {
 		this.sistema = new SistemaDistribuicaoEnergia();
+		this.clientes = this.sistema.getClientes();
+		this.imoveis = this.sistema.getImoveis();
+		this.faturas = this.sistema.getFaturas();
 	}
 
 	public static void main(String[] args) {
@@ -394,7 +399,7 @@ public class App {
 	                if (cliente != null) {
 	                    System.out.print("Digite a matrícula do imóvel: ");
 	                    String matriculaImovel = scanner.nextLine();
-	                    
+
 	                    if (matriculaImovel == null || matriculaImovel.trim().isEmpty()) {
 	                        System.out.println("Matrícula do imóvel inválida.");
 	                        break;
@@ -409,7 +414,7 @@ public class App {
 	                        System.out.println("Imóvel não encontrado.");
 	                    }
 	                } else {
-	                    System.out.println("Cliente não encontrado.");
+	                    System.out.println("Cliente não encontrado para o CPF informado: " + cpfCliente);
 	                }
 	                break;
 	            case 7:
@@ -431,7 +436,7 @@ public class App {
 	    } while (opcao != 8);
 	}
 
-	public static void listarImovelCliente(int gestao) {
+	public void listarImovelCliente(int gestao) {
 		if (gestao == 1) {
 			for (Cliente cl : clientes) {
 				System.out.println("Nome: " + cl.getNome());
@@ -457,7 +462,7 @@ public class App {
 		}
 	}
 
-	public static int buscaImovel(String matricula) {
+	public int buscaImovel(String matricula) {
 		for (int i = 0; i < imoveis.size(); i++) {
 			if (imoveis.get(i).getMatricula().equals(matricula)) {
 				return i;
@@ -472,8 +477,6 @@ public class App {
 	        return null;
 	    }
 	    for (Cliente cliente : clientes) {
-	    	System.out.println(cliente.getCpf());
-        	System.out.println(cliente.getNome());
 	        if (cliente.getCpf().equals(cpf)) {
 	            return cliente;
 	        }
