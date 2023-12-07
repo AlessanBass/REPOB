@@ -1,7 +1,10 @@
 
 import java.util.Scanner;
 import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class App {
 	// Nessa classe que vai ficar toda a lógica do negocio
@@ -50,10 +53,10 @@ public class App {
 				menuGestaoImoveis(scanner, sistema);
 				break;
 			case 3:
-				// menuGestaoFaturas(scanner, sistema);
+				menuGestaoFaturas(scanner, sistema);
 				break;
 			case 4:
-				// menuGestaoPagamentos(scanner, sistema);
+				 menuGestaoPagamentos(scanner, sistema);
 				break;
 			case 5:
 				System.out.println("Em construcao");
@@ -182,6 +185,103 @@ public class App {
 			}
 		} while (opcao != 6);
 	}
+	
+	private void exibirMenuFaturas() {
+	    System.out.println("-------- Menu Gestão de Faturas --------");
+	    System.out.println("1. Registro de Consumo");
+	    System.out.println("2. Listar Faturas (Abertas)");
+	    System.out.println("3. Listar Todas as Faturas");
+	    System.out.println("4. Voltar ao Menu Principal");
+	}
+
+	private void menuGestaoFaturas(Scanner scanner, SistemaDistribuicaoEnergia sistema) {
+	    int opcao;
+
+	    do {
+	        exibirMenuFaturas();
+	        System.out.print("Escolha uma opção: ");
+	        opcao = scanner.nextInt();
+	        scanner.nextLine();
+
+	        switch (opcao) {
+	            case 1:
+	            	System.out.print("Digite o CPF do cliente: ");
+	            	String cpfClienteRegistro = scanner.nextLine();
+
+	            	Cliente clienteRegistro = buscarClientePorCpf(cpfClienteRegistro);
+
+	            	if (clienteRegistro != null) {
+	            	    System.out.print("Digite o consumo do cliente: ");
+	            	    double consumo = scanner.nextDouble();
+	            	    clienteRegistro.registrarConsumo(consumo);
+	            	    System.out.println("Consumo registrado com sucesso!");
+	            	} else {
+	            	    System.out.println("Cliente não encontrado.");
+	            	}
+	                break;
+	            case 2:
+	                sistema.listarFaturasAbertas();
+	                break;
+	            case 3:
+	                sistema.listarTodasFaturas();
+	                break;
+	            case 4:
+	                System.out.println("Retornando ao menu principal.");
+	                return;
+	            default:
+	                System.out.println("Opção inválida. Tente novamente.");
+	                break;
+	        }
+	    } while (opcao != 4);
+	}
+	
+	private void exibirMenuPagamentos() {
+		System.out.println("-------- Menu Gestão de Pagamentos --------");
+		System.out.println("1. Incluir Pagamento");
+		System.out.println("2. Listar Pagamentos (todos, por fatura)");
+		System.out.println("3. Listar Reembolsos (todos, por fatura)");
+		System.out.println("4. Voltar ao Menu Principal");
+	}
+
+	private void menuGestaoPagamentos(Scanner scanner, SistemaDistribuicaoEnergia sistema) {
+		int opcao;
+		do {
+			exibirMenuPagamentos();
+			System.out.print("Escolha uma opção: ");
+			opcao = scanner.nextInt();
+			scanner.nextLine();
+
+			switch (opcao) {
+			case 1:
+				System.out.print("Digite a data da fatura (formato dd/MM/yyyy): ");
+				String dataStr = scanner.nextLine();
+				try {
+					Date dataFatura = new SimpleDateFormat("dd/MM/yyyy").parse(dataStr);
+					System.out.print("Digite o valor do pagamento: ");
+					double valorPagamento = scanner.nextDouble();
+					sistema.incluirPagamento(dataFatura, valorPagamento);
+				} catch (ParseException e) {
+					System.out.println("Formato de data inválido. Use dd/MM/yyyy.");
+				}
+				break;
+			case 2:
+				// Listar Pagamentos (todos, por fatura)
+				// Implemente a lógica de listagem de pagamentos
+				break;
+			case 3:
+				// Listar Reembolsos (todos, por fatura)
+				// Implemente a lógica de listagem de reembolsos
+				break;
+			case 4:
+				System.out.println("Retornando ao menu principal.");
+				return;
+			default:
+				System.out.println("Opção inválida. Tente novamente.");
+				break;
+			}
+		} while (opcao != 4);
+	}
+
  	
 
 	private Imovel encontrarImovelPorMatricula(String matricula) {

@@ -1,16 +1,22 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Pagamento {
 	
-	private Date data;
+	private Date dataPagamento;
     private double valor;
     
+    public Pagamento(Date dataPagamento, double valor) {
+        this.dataPagamento = dataPagamento;
+        this.valor = valor;
+    }
+    
     public Date getData() {
-		return data;
+		return dataPagamento;
 	}
 
 	public void setData(Date data) {
-		this.data = data;
+		this.dataPagamento = data;
 	}
 
 	public double getValor() {
@@ -22,22 +28,28 @@ public class Pagamento {
 	}
 
 	public Pagamento(double valor) {
-        this.data = new Date();
+        this.dataPagamento = new Date();
         this.valor = valor;
+    }
+	
+	@Override
+	public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return "Data do Pagamento: " + dateFormat.format(dataPagamento) +
+                " | Valor: " + valor;
     }
     
     public static void incluirPagamento(Fatura fatura, double valor) {
-        // Verifica se a fatura já foi quitada
         if (!fatura.isQuitado()) {
             Pagamento pagamento = new Pagamento(valor);
             fatura.incluirPagamento(pagamento);
-
-            // Verifica se a fatura foi quitada após o pagamento
+            
             if (fatura.calcularSaldoDevido() <= 0) {
                 fatura.setQuitado(true);
                 double valorExcedente = fatura.calcularSaldoExcedente();
                 if (valorExcedente > 0) {
-                    Reembolso reembolso = new Reembolso(valorExcedente);
+                	Date dataReembolso = new Date();
+                    Reembolso reembolso = new Reembolso(dataReembolso, valorExcedente);
                     fatura.incluirReembolso(reembolso);
                 }
             }
