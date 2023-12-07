@@ -90,17 +90,15 @@ public class App {
 
 			switch (opcao) {
 			case 1:
-				// Incluir cliente
 				System.out.print("Digite o CPF do cliente: ");
 				String cpf = scanner.nextLine();
 				System.out.print("Digite o nome do cliente: ");
 				String nome = scanner.nextLine();
-				Cliente novoCliente = new Cliente(cpf, nome);
+				Cliente novoCliente = new Cliente(nome, cpf);
 				sistema.incluirCliente(novoCliente);
 				System.out.println("Cliente incluído com sucesso!");
 				break;
 			case 2:
-				// Consultar cliente
 				System.out.print("Digite o CPF do cliente: ");
 				String cpfConsulta = scanner.nextLine();
 				Cliente clienteConsultado = sistema.consultarCliente(cpfConsulta);
@@ -171,7 +169,7 @@ public class App {
 				break;
 			case 8:
 				System.out.println("Retornando ao menu principal.");
-				break;
+				return;
 			default:
 				System.out.println("Opção inválida. Tente novamente.");
 				break;
