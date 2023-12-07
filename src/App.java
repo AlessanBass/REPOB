@@ -47,6 +47,7 @@ public class App {
 				menuGestaoClientes(scanner, sistema);
 				break;
 			case 2:
+				menuGestaoImoveis(scanner, sistema);
 				break;
 			case 3:
 				// menuGestaoFaturas(scanner, sistema);
@@ -133,7 +134,7 @@ public class App {
 				if (clienteExistente != null) {
 					System.out.print("Digite o novo nome do cliente: ");
 					String novoNome = scanner.nextLine();
-					Cliente novoClienteAlterado = new Cliente(cpfAlteracao, novoNome);
+					Cliente novoClienteAlterado = new Cliente(novoNome, cpfAlteracao);
 					sistema.alterarCliente(cpfAlteracao, novoClienteAlterado);
 					System.out.println("Cliente alterado com sucesso!");
 				} else {
@@ -190,6 +191,124 @@ public class App {
 			}
 		}
 		return null;
+	}
+	
+	private void exibirMenuImoveis() {
+	    System.out.println("-------- Menu Gestão de Imóveis --------");
+	    System.out.println("1. Incluir Imóvel");
+	    System.out.println("2. Consultar Imóvel");
+	    System.out.println("3. Listar Imóveis");
+	    System.out.println("4. Excluir Imóvel");
+	    System.out.println("5. Alterar Imóvel");
+	    System.out.println("6. Associar Imóvel a Cliente");
+	    System.out.println("7. Listar Clientes de um Imóvel");
+	    System.out.println("8. Voltar ao Menu Principal");
+	}
+
+	private void menuGestaoImoveis(Scanner scanner, SistemaDistribuicaoEnergia sistema) {
+		int opcao;
+
+	    do {
+	        exibirMenuImoveis();
+	        System.out.print("Escolha uma opção: ");
+	        opcao = scanner.nextInt();
+	        scanner.nextLine();
+
+	        switch (opcao) {
+	            case 1:
+	                System.out.print("Digite a matrícula do imóvel: ");
+	                String matricula = scanner.nextLine();
+	                System.out.print("Digite o endereço do imóvel: ");
+	                String endereco = scanner.nextLine();
+	                System.out.print("Digite a primeira leitura do imóvel: ");
+	                double primeiraLeitura = scanner.nextDouble();
+	                System.out.print("Digite a última leitura do imóvel: ");
+	                double ultimaLeitura = scanner.nextDouble();
+
+	                Imovel novoImovel = new Imovel(matricula, endereco, primeiraLeitura, ultimaLeitura);
+	                sistema.incluirImovel(novoImovel);
+	                System.out.println("Imóvel incluído com sucesso!");
+	                break;
+	            case 2:
+	                // Consultar Imóvel
+	                System.out.print("Digite a matrícula do imóvel: ");
+	                String matriculaConsulta = scanner.nextLine();
+	                Imovel imovelConsultado = sistema.consultarImovel(matriculaConsulta);
+	                if (imovelConsultado != null) {
+	                    System.out.println("Matrícula: " + imovelConsultado.getMatricula());
+	                    System.out.println("Endereço: " + imovelConsultado.getEndereco());
+	                    System.out.println("Primeira Leitura: " + imovelConsultado.getPrimeiraLeitura());
+	                    System.out.println("Última Leitura: " + imovelConsultado.getUltimaLeitura());
+	                } else {
+	                    System.out.println("Imóvel não encontrado.");
+	                }
+	                break;
+	            case 3:
+	                // Listar Imóveis
+	                List<Imovel> imoveis = sistema.listarImoveis();
+	                if (!imoveis.isEmpty()) {
+	                    System.out.println("Lista de Imóveis:");
+	                    for (Imovel imovel : imoveis) {
+	                        System.out.println(imovel);
+	                    }
+	                } else {
+	                    System.out.println("Não há imóveis cadastrados.");
+	                }
+	                break;
+	            case 4:
+	                // Excluir Imóvel
+	                System.out.print("Digite a matrícula do imóvel a ser excluído: ");
+	                String matriculaExclusao = scanner.nextLine();
+	                sistema.excluirImovel(matriculaExclusao);
+	                break;
+	            case 5:
+	                // Alterar Imóvel
+	                System.out.print("Digite a matrícula do imóvel a ser alterado: ");
+	                String matriculaAlteracao = scanner.nextLine();
+	                Imovel imovelExistente = sistema.consultarImovel(matriculaAlteracao);
+	                if (imovelExistente != null) {
+	                    System.out.print("Digite o novo endereço do imóvel: ");
+	                    String novoEndereco = scanner.nextLine();
+	                    Imovel novoImovelAlterado = new Imovel(matriculaAlteracao, novoEndereco, ...);
+	                    // Preencha os demais atributos conforme necessário
+
+	                    sistema.alterarImovel(matriculaAlteracao, novoImovelAlterado);
+	                    System.out.println("Imóvel alterado com sucesso!");
+	                } else {
+	                    System.out.println("Imóvel não encontrado.");
+	                }
+	                break;
+	            case 6:
+	                System.out.print("Digite a matrícula do imóvel: ");
+	                String matriculaImovel = scanner.nextLine();
+
+	                Imovel imovel = sistema.consultarImovel(matriculaImovel);
+
+	                if (imovel != null) {
+	                    cliente.adicionarImovel(imovel);
+	                    System.out.println("Imóvel adicionado ao cliente com sucesso.");
+	                } else {
+	                    System.out.println("Imóvel não encontrado.");
+	                }
+	                break;
+	            case 7:
+	                System.out.print("Digite a matrícula do imóvel: ");
+	                String matriculaImovelConsulta = scanner.nextLine();
+	                Imovel imovelCli = sistema.consultarImovel(matriculaImovelConsulta);
+	                if (imovelCli != null) {
+	                } else {
+	                    System.out.println("Imóvel não encontrado.");
+	                }
+	                break;
+	            case 8:
+	                System.out.println("Retornando ao menu principal.");
+	                return;
+	            default:
+	                System.out.println("Opção inválida. Tente novamente.");
+	                break;
+	        }
+	    } while (opcao != 8);
+	}
 	}
 
 	public static void listarImovelCliente(int gestao) {
