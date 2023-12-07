@@ -12,7 +12,7 @@ public class Imovel {
     }
 
     public String getMatricula() {
-        return matricula;
+        return this.matricula;
     }
 
     public void setMatricula(String matricula) {
@@ -41,5 +41,13 @@ public class Imovel {
 
     public void setPenultimaLeitura(double penultimaLeitura) {
         this.penultimaLeitura = penultimaLeitura;
+    }
+    
+    @Override
+    public String toString() {
+        return "Matrícula: " + matricula +
+                "\nEndereço: " + endereco +
+                "\nPrimeira Leitura: " + penultimaLeitura +
+                "\nÚltima Leitura: " + ultimaLeitura;
     }
 }
