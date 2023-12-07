@@ -51,4 +51,19 @@ public class Cliente {
             System.out.println("- Matrícula: " + imovel.getMatricula() + ", Endereço: " + imovel.getEndereco());
         }
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Cliente: ").append(nome).append(" | CPF: ").append(cpf);
+
+        if (!imoveisCliente.isEmpty()) {
+            builder.append(" | Imóveis: ");
+            for (Imovel imovel : imoveisCliente) {
+                builder.append("Matrícula: ").append(imovel.getMatricula()).append(", Endereço: ").append(imovel.getEndereco()).append(" | ");
+            }
+        }
+
+        return builder.toString();
+    }
 }
