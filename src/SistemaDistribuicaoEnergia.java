@@ -128,10 +128,10 @@ public class SistemaDistribuicaoEnergia {
 			Pagamento pagamento = new Pagamento(dataFatura, valor);
 			fatura.incluirPagamento(pagamento);
 
-			// Verifica se a fatura está quitada após o pagamento
+			
 			if (fatura.isQuitado()) {
 				System.out.println("Fatura quitada!");
-				// Se houver valor excedente, gera um reembolso
+				
 				double valorExcedente = fatura.calcularSaldoExcedente();
 				if (valorExcedente > 0) {
 					Reembolso reembolso = new Reembolso(dataFatura, valorExcedente);
@@ -179,10 +179,8 @@ public class SistemaDistribuicaoEnergia {
 	}
 
     public Imovel encontrarImovelPorMatricula(String matricula) {
-        System.out.println("Tamaho de imoveis: " + imoveis.size());
         for (Imovel imovel : imoveis) {
             if (imovel.getMatricula().equals(matricula)) {
-                System.out.println("teste aqi: " + imovel.getMatricula());
                 return imovel;
             }
         }
@@ -203,5 +201,9 @@ public class SistemaDistribuicaoEnergia {
 
     public void setImoveis(List<Imovel> imoveis) {
         this.imoveis = imoveis;
+    }
+    
+    public List<Fatura> getFaturas() {
+        return faturas;
     }
 }
