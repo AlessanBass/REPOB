@@ -39,51 +39,52 @@ public class FalhaDistribuicao extends Falha {
             }
         }
     }
-  public void encerrarReparo(){
-        Scanner sc = new Scanner(System.in);
-        int op, indice, i;
-        try{
-            i = 0;
-            for(Reparo reparo : this.reparos){
-                if(!reparo.getResolvido()){
-                    i++;
-                    System.out.println("Reparo: " + i);
-                    System.out.println("Descrição: " + reparo.getDescricao());
-                    System.out.println("Início: " + reparo.getDataInicio());
-                    System.out.println("Previsão: " + reparo.getPrevisao());
-                }
-            }
-            System.out.println("Digite o reparo que deseja terminar:");
-            indice = sc.nextInt();
-            if(indice < 0 || indice > i){
-                throw new Exception("Não há correspondências.");
-            }
-            else{
-                i = 0;
-                for(Reparo reparo : this.reparos){
-                    if(!reparo.getResolvido()){
-                        i++;
-                        if(i == indice){
-                            reparo.setDataFim(new Date());
-                            System.out.println("O reparo foi finalizado? 1-Sim 2-Não");
-                            op = sc.nextInt();
-                            sc.nextLine();
-                            if(op == 1)
-                                reparo.setResolvido(true);
-                            if(op == 2){
-                                System.out.println("Gostaria de iniciar um novo reparo? 1-Sim 2-Não");
-                                op = sc.nextInt();
-                                sc.nextLine();
-                                if(op == 1)
-                                    reparo.newReparo(this.reparos);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        catch(Exception ex){
-            System.out.println(ex.getMessage());
-        }
-    }
+  
+    public void encerrarReparo(){
+          Scanner sc = new Scanner(System.in);
+          int op, indice, i;
+          try{
+              i = 0;
+              for(Reparo reparo : this.reparos){
+                  if(!reparo.getResolvido()){
+                      i++;
+                      System.out.println("Reparo: " + i);
+                      System.out.println("Descrição: " + reparo.getDescricao());
+                      System.out.println("Início: " + reparo.getDataInicio());
+                      System.out.println("Previsão: " + reparo.getPrevisao());
+                  }
+              }
+              System.out.println("Digite o reparo que deseja terminar:");
+              indice = sc.nextInt();
+              if(indice < 0 || indice > i){
+                  throw new Exception("Não há correspondências.");
+              }
+              else{
+                  i = 0;
+                  for(Reparo reparo : this.reparos){
+                      if(!reparo.getResolvido()){
+                          i++;
+                          if(i == indice){
+                              reparo.setDataFim(new Date());
+                              System.out.println("O reparo foi finalizado? 1-Sim 2-Não");
+                              op = sc.nextInt();
+                              sc.nextLine();
+                              if(op == 1)
+                                  reparo.setResolvido(true);
+                              if(op == 2){
+                                  System.out.println("Gostaria de iniciar um novo reparo? 1-Sim 2-Não");
+                                  op = sc.nextInt();
+                                  sc.nextLine();
+                                  if(op == 1)
+                                      reparo.newReparo(this.reparos);
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+          catch(Exception ex){
+              System.out.println(ex.getMessage());
+          }
+      }
 }
