@@ -271,12 +271,10 @@ public class App {
 				}
 				break;
 			case 2:
-				// Listar Pagamentos (todos, por fatura)
-				// Implemente a lógica de listagem de pagamentos
+				// Implementar a lógica de listagem de pagamentos
 				break;
 			case 3:
-				// Listar Reembolsos (todos, por fatura)
-				// Implemente a lógica de listagem de reembolsos
+				// Implementar a lógica de listagem de reembolsos
 				break;
 			case 4:
 				System.out.println("Retornando ao menu principal.");
