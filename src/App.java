@@ -154,7 +154,8 @@ public class App {
 		            System.out.print("Digite a matrícula do imóvel: ");
 		            String matriculaImovel = scanner.nextLine();
 
-		            Imovel imovel = encontrarImovelPorMatricula(matriculaImovel);
+		            Imovel imovel = sistema.encontrarImovelPorMatricula(matriculaImovel);
+
 
 		            if (imovel != null) {
 		                cliente.adicionarImovel(imovel);
@@ -285,8 +286,10 @@ public class App {
  	
 
 	private Imovel encontrarImovelPorMatricula(String matricula) {
+		System.out.println("Tamaho de imoveis: " + imoveis.size());
 		for (Imovel imovel : imoveis) {
 			if (imovel.getMatricula().equals(matricula)) {
+				System.out.println("teste aqi: " + imovel.getMatricula());
 				return imovel;
 			}
 		}
@@ -348,6 +351,7 @@ public class App {
 	                    System.out.println("Lista de Imóveis:");
 	                    for (Imovel imovel : imoveis) {
 	                        System.out.println(imovel);
+							System.out.println("-----------------------");
 	                    }
 	                } else {
 	                    System.out.println("Não há imóveis cadastrados.");

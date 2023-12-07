@@ -178,4 +178,30 @@ public class SistemaDistribuicaoEnergia {
 		}
 	}
 
+    public Imovel encontrarImovelPorMatricula(String matricula) {
+        System.out.println("Tamaho de imoveis: " + imoveis.size());
+        for (Imovel imovel : imoveis) {
+            if (imovel.getMatricula().equals(matricula)) {
+                System.out.println("teste aqi: " + imovel.getMatricula());
+                return imovel;
+            }
+        }
+        return null;
+    }
+
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
+    }
+
+    public List<Imovel> getImoveis() {
+        return imoveis;
+    }
+
+    public void setImoveis(List<Imovel> imoveis) {
+        this.imoveis = imoveis;
+    }
 }
