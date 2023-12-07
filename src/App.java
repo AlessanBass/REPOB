@@ -328,12 +328,11 @@ public class App {
 	                System.out.print("Digite a última leitura do imóvel: ");
 	                double ultimaLeitura = scanner.nextDouble();
 
-	                Imovel novoImovel = new Imovel(matricula, endereco, primeiraLeitura, ultimaLeitura);
+	                Imovel novoImovel = new Imovel(matricula, endereco, ultimaLeitura, primeiraLeitura);
 	                sistema.incluirImovel(novoImovel);
 	                System.out.println("Imóvel incluído com sucesso!");
 	                break;
 	            case 2:
-	                // Consultar Imóvel
 	                System.out.print("Digite a matrícula do imóvel: ");
 	                String matriculaConsulta = scanner.nextLine();
 	                Imovel imovelConsultado = sistema.consultarImovel(matriculaConsulta);
@@ -347,7 +346,6 @@ public class App {
 	                }
 	                break;
 	            case 3:
-	                // Listar Imóveis
 	                List<Imovel> imoveis = sistema.listarImoveis();
 	                if (!imoveis.isEmpty()) {
 	                    System.out.println("Lista de Imóveis:");
@@ -474,6 +472,8 @@ public class App {
 	        return null;
 	    }
 	    for (Cliente cliente : clientes) {
+	    	System.out.println(cliente.getCpf());
+        	System.out.println(cliente.getNome());
 	        if (cliente.getCpf().equals(cpf)) {
 	            return cliente;
 	        }
