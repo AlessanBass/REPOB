@@ -237,7 +237,7 @@ public class App {
 	                if (imovelConsultado != null) {
 	                    System.out.println("Matrícula: " + imovelConsultado.getMatricula());
 	                    System.out.println("Endereço: " + imovelConsultado.getEndereco());
-	                    System.out.println("Primeira Leitura: " + imovelConsultado.getPrimeiraLeitura());
+	                    System.out.println("Primeira Leitura: " + imovelConsultado.getPenultimaLeitura());
 	                    System.out.println("Última Leitura: " + imovelConsultado.getUltimaLeitura());
 	                } else {
 	                    System.out.println("Imóvel não encontrado.");
@@ -256,22 +256,22 @@ public class App {
 	                }
 	                break;
 	            case 4:
-	                // Excluir Imóvel
 	                System.out.print("Digite a matrícula do imóvel a ser excluído: ");
 	                String matriculaExclusao = scanner.nextLine();
 	                sistema.excluirImovel(matriculaExclusao);
 	                break;
 	            case 5:
-	                // Alterar Imóvel
 	                System.out.print("Digite a matrícula do imóvel a ser alterado: ");
 	                String matriculaAlteracao = scanner.nextLine();
 	                Imovel imovelExistente = sistema.consultarImovel(matriculaAlteracao);
 	                if (imovelExistente != null) {
 	                    System.out.print("Digite o novo endereço do imóvel: ");
 	                    String novoEndereco = scanner.nextLine();
-	                    Imovel novoImovelAlterado = new Imovel(matriculaAlteracao, novoEndereco, ...);
-	                    // Preencha os demais atributos conforme necessário
-
+	                    System.out.print("Digite a primeira leitura do imóvel: ");
+	                    double novaprimeiraLeitura = scanner.nextDouble();
+	                    System.out.print("Digite a última leitura do imóvel: ");
+	                    double novoaultimaLeitura = scanner.nextDouble();
+	                    Imovel novoImovelAlterado = new Imovel(matriculaAlteracao, novoEndereco, novoaultimaLeitura, novaprimeiraLeitura);
 	                    sistema.alterarImovel(matriculaAlteracao, novoImovelAlterado);
 	                    System.out.println("Imóvel alterado com sucesso!");
 	                } else {
@@ -279,16 +279,35 @@ public class App {
 	                }
 	                break;
 	            case 6:
-	                System.out.print("Digite a matrícula do imóvel: ");
-	                String matriculaImovel = scanner.nextLine();
+	            	System.out.print("Digite o CPF do cliente: ");
+	                String cpfCliente = scanner.nextLine();
+	                
+	                if (cpfCliente == null || cpfCliente.trim().isEmpty()) {
+	                    System.out.println("CPF inválido.");
+	                    break;
+	                }
+	                
+	                Cliente cliente = buscarClientePorCpf(cpfCliente);
 
-	                Imovel imovel = sistema.consultarImovel(matriculaImovel);
+	                if (cliente != null) {
+	                    System.out.print("Digite a matrícula do imóvel: ");
+	                    String matriculaImovel = scanner.nextLine();
+	                    
+	                    if (matriculaImovel == null || matriculaImovel.trim().isEmpty()) {
+	                        System.out.println("Matrícula do imóvel inválida.");
+	                        break;
+	                    }
 
-	                if (imovel != null) {
-	                    cliente.adicionarImovel(imovel);
-	                    System.out.println("Imóvel adicionado ao cliente com sucesso.");
+	                    Imovel imovel = sistema.consultarImovel(matriculaImovel);
+
+	                    if (imovel != null) {
+	                        cliente.adicionarImovel(imovel);
+	                        System.out.println("Imóvel adicionado ao cliente com sucesso.");
+	                    } else {
+	                        System.out.println("Imóvel não encontrado.");
+	                    }
 	                } else {
-	                    System.out.println("Imóvel não encontrado.");
+	                    System.out.println("Cliente não encontrado.");
 	                }
 	                break;
 	            case 7:
@@ -308,7 +327,6 @@ public class App {
 	                break;
 	        }
 	    } while (opcao != 8);
-	}
 	}
 
 	public static void listarImovelCliente(int gestao) {
@@ -346,13 +364,17 @@ public class App {
 		return -1;
 	}
 
-	public static int buscaCliente(String cpf) {
-		for (int i = 0; i < clientes.size(); i++) {
-			if (clientes.get(i).getCpf().equals(cpf)) {
-				return i;
-			}
-		}
-		return -1;
+	private Cliente buscarClientePorCpf(String cpf) {
+		if (cpf == null || cpf.trim().isEmpty()) {
+	        System.out.println("CPF inválido.");
+	        return null;
+	    }
+	    for (Cliente cliente : clientes) {
+	        if (cliente.getCpf().equals(cpf)) {
+	            return cliente;
+	        }
+	    }
+	    return null;
 	}
 
 }
