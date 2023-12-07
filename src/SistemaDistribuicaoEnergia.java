@@ -3,9 +3,11 @@ import java.util.List;
 
 public class SistemaDistribuicaoEnergia {
 	private List<Cliente> clientes;
+	 private List<Imovel> imoveis;
 
     public SistemaDistribuicaoEnergia() {
         this.clientes = new ArrayList<>();
+        this.imoveis = new ArrayList<>();
     }
 
     
@@ -49,6 +51,51 @@ public class SistemaDistribuicaoEnergia {
                 clientes.set(i, novoCliente);
                 break;
             }
+        }
+    }
+    
+    public void incluirImovel(Imovel imovel) {
+        if (consultarImovel(imovel.getMatricula()) == null) {
+            imoveis.add(imovel);
+            System.out.println("Imóvel incluído com sucesso!");
+        } else {
+            System.out.println("Matrícula do imóvel já existe. Inclusão não realizada.");
+        }
+    }
+
+    public Imovel consultarImovel(String matricula) {
+        for (Imovel imovel : imoveis) {
+            if (imovel.getMatricula().equals(matricula)) {
+                return imovel; 
+            }
+        }
+        return null; 
+    }
+
+    public List<Imovel> listarImoveis() {
+        return imoveis;
+    }
+    
+    public void alterarImovel(String matricula, Imovel novoImovel) {
+        Imovel imovelExistente = consultarImovel(matricula);
+
+        if (imovelExistente != null) {
+            imoveis.remove(imovelExistente);
+            imoveis.add(novoImovel);
+            System.out.println("Imóvel alterado com sucesso!");
+        } else {
+            System.out.println("Imóvel não encontrado. Alteração não realizada.");
+        }
+    }
+
+
+    public void excluirImovel(String matricula) {
+        Imovel imovel = consultarImovel(matricula);
+        if (imovel != null) {
+            imoveis.remove(imovel);
+            System.out.println("Imóvel excluído com sucesso!");
+        } else {
+            System.out.println("Imóvel não encontrado. Exclusão não realizada.");
         }
     }
 
