@@ -219,7 +219,7 @@ public class App {
 	            	if (clienteRegistro != null) {
 	            	    System.out.print("Digite o consumo do cliente: ");
 	            	    double consumo = scanner.nextDouble();
-	            	    clienteRegistro.registrarConsumo(consumo);
+	            	    sistema.registrarConsumo(consumo);
 	            	    System.out.println("Consumo registrado com sucesso!");
 	            	} else {
 	            	    System.out.println("Cliente não encontrado.");
@@ -286,18 +286,6 @@ public class App {
 		} while (opcao != 4);
 	}
 
- 	
-
-	private Imovel encontrarImovelPorMatricula(String matricula) {
-		System.out.println("Tamaho de imoveis: " + imoveis.size());
-		for (Imovel imovel : imoveis) {
-			if (imovel.getMatricula().equals(matricula)) {
-				System.out.println("teste aqi: " + imovel.getMatricula());
-				return imovel;
-			}
-		}
-		return null;
-	}
 	
 	private void exibirMenuImoveis() {
 	    System.out.println("-------- Menu Gestão de Imóveis --------");
