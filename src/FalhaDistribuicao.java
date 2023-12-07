@@ -75,8 +75,10 @@ public class FalhaDistribuicao extends Falha {
                                   System.out.println("Gostaria de iniciar um novo reparo? 1-Sim 2-Não");
                                   op = sc.nextInt();
                                   sc.nextLine();
-                                  if(op == 1)
-                                      reparo.newReparo(this.reparos);
+                                  if(op == 1){
+                                      //  reparo.newReparo(this.reparos);
+                                  }
+
                               }
                           }
                       }
