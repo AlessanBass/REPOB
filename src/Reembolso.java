@@ -1,18 +1,23 @@
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
 public class Reembolso {
-	
-	private Date data;
+
+	private Date dataReembolso;
 	private double valor;
-	
-	public Date getData() {
-		return data;
+
+	public Reembolso(Date dataReembolso, double valor) {
+		this.dataReembolso = dataReembolso;
+		this.valor = valor;
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public Date getDataReembolso() {
+		return dataReembolso;
+	}
+
+	public void setDataReembolso(Date dataReembolso) {
+		this.dataReembolso = dataReembolso;
 	}
 
 	public double getValor() {
@@ -23,8 +28,9 @@ public class Reembolso {
 		this.valor = valor;
 	}
 
-    public Reembolso(double valor) {
-        this.data = new Date();
-        this.valor = valor;
-    }
+	@Override
+	public String toString() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		return "Data do Reembolso: " + dateFormat.format(dataReembolso) + "\nValor Reembolsado: " + valor;
+	}
 }
